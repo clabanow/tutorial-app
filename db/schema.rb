@@ -11,26 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916125310) do
+ActiveRecord::Schema.define(version: 20140916153708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "tutorials", force: true do |t|
     t.integer  "category_id"
-    t.decimal  "rating",       precision: 5, scale: 1
-    t.integer  "votes"
-    t.integer  "comments"
     t.string   "url"
     t.string   "title"
     t.string   "description"
     t.integer  "publisher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "media_type_id"
+    t.boolean  "is_paid"
   end
 
   add_index "tutorials", ["category_id"], name: "index_tutorials_on_category_id", using: :btree
   add_index "tutorials", ["publisher_id"], name: "index_tutorials_on_publisher_id", using: :btree
-  add_index "tutorials", ["rating"], name: "index_tutorials_on_rating", using: :btree
 
 end

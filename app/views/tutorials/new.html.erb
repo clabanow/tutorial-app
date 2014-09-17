@@ -1,0 +1,29 @@
+<h1>Add a tutorial</h1>
+
+<%= form_for(@tutorial) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :url, "Link" %>
+  <%= f.url_field :url %>
+
+  <%= f.label :title, "Tutorial name" %>
+  <%= f.text_field :title %>
+
+  <%= f.label :description, "A brief description" %>
+  <%= f.text_area :description %>
+
+  <%= f.label :publisher_id, "Author" %>
+  <%= f.number_field :publisher_id %>
+
+  <%= f.label :category_id, "Category" %>
+  <%= f.number_field :category_id %>
+
+  <%= f.label :media_type_id, "Media type" %>
+  <%= f.number_field :media_type_id %>
+
+  <%= f.label :is_paid, "Paid?" %>
+  <%= f.check_box :is_paid %>
+
+  <%= f.submit "Add tutorial", class: 'btn' %>
+
+<% end %>
