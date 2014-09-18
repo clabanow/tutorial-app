@@ -33,11 +33,26 @@ describe "Tutorial Pages" do
         before { click_button submit }
         let(:tutorial) { Tutorial.find_by(title: "A new tutorial") }
 
+        expect(tutorial).to be_valid
         it { should have_title(get_full_title('All tutorials')) }
-        it { should have_selector('a', tutorial.title) }
         it { should have_selector('div.alert.alert-success', text: 'tutorial created') }
+
+        describe "editing the tutorial" do
+          before do
+            visit edit_tutorial_path
+            fill_in "Tutorial name", with: "An edited tutorial"
+            click_button submit
+            let(:edited_tutorial) { Tutorial.find_by(title: "An edited tutorial") }
+          end
+
+          expect(tutorial).not_to be_valid
+          expect(edited_tutorial).to be_valid
+          it { should have_title(get_full_title('All tutorials')) }
+          it { should have_selector('div.alert.alert-success', text: 'tutorial edited') }
+        end
       end
     end
-
   end
+
+
 end
