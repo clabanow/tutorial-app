@@ -4,7 +4,7 @@
   <%= render 'shared/error_messages', object: f.object %>
 
   <%= f.label :url, "Link" %>
-  <%= f.url_field :url %>
+  <%= f.text_field :url %>
 
   <%= f.label :title, "Tutorial name" %>
   <%= f.text_field :title %>
@@ -23,6 +23,9 @@
 
   <%= f.label :is_paid, "Paid?" %>
   <%= f.check_box :is_paid %>
+
+  <%= f.label :date_created, "Date" %>
+  <%= f.date_select :date_created, order: [:month, :year], start_year: 2010 %>
 
   <%= f.submit "Add tutorial", class: 'btn' %>
 

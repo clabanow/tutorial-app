@@ -17,11 +17,12 @@ describe "Tutorial Pages" do
       before do
         fill_in "Tutorial name",       with: "A new tutorial"
         fill_in "Category",            with: 1
-        fill_in "Link",                with: "www.google.com"
+        fill_in "Link",                with: "http://www.google.com"
         fill_in "A brief description", with: "A JS tutorial"
         fill_in "Author",              with: 2
         fill_in "Media type",          with: 1
-        fill_in "Paid?",               with: false
+        check "Paid?"  
+        # date is left as default             
       end
 
       it "should create a new tutorial" do
@@ -30,9 +31,9 @@ describe "Tutorial Pages" do
 
       describe "after saving the tutorial" do
         before { click_button submit }
-        let(:tutorial) { Tutorial.find_by(:title, "A new tutorial") }
+        let(:tutorial) { Tutorial.find_by(title: "A new tutorial") }
 
-        it { should have_title(get_full_title(tutorial.title)) }
+        it { should have_title(get_full_title('All tutorials')) }
         it { should have_selector('a', tutorial.title) }
         it { should have_selector('div.alert.alert-success', text: 'tutorial created') }
       end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916153708) do
+ActiveRecord::Schema.define(version: 20140917125122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(version: 20140916153708) do
     t.datetime "updated_at"
     t.integer  "media_type_id"
     t.boolean  "is_paid"
+    t.date     "date_created"
   end
 
   add_index "tutorials", ["category_id"], name: "index_tutorials_on_category_id", using: :btree
   add_index "tutorials", ["publisher_id"], name: "index_tutorials_on_publisher_id", using: :btree
+  add_index "tutorials", ["url"], name: "index_tutorials_on_url", unique: true, using: :btree
 
 end

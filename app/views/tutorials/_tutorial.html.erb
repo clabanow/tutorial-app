@@ -1,0 +1,15 @@
+<div class='tutorial'>
+  <div>
+    <%= link_to tutorial.title, tutorial.url %> |
+    Author: <%= tutorial.publisher_id %> |
+    Created: <%= tutorial.date_created.strftime("%B %Y") %>
+  </div>
+  <div>
+    <% if tutorial.is_paid %>
+      Paid
+    <% else %>
+      Free
+    <% end %>
+  </div>
+</div>
+<br>

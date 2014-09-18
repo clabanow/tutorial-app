@@ -9,7 +9,8 @@ describe Tutorial do
     description: 'A rails tutorial for beginners',
     publisher_id: 1,
     media_type_id: 1,
-    is_paid: false
+    is_paid: false,
+    date_created: Date.parse('1-1-2014')
     ) }
 
   subject { @tutorial }
@@ -21,10 +22,19 @@ describe Tutorial do
   it { should respond_to(:publisher_id) }
   it { should respond_to(:media_type_id) }
   it { should respond_to(:is_paid) }
+  it { should respond_to(:date_created) }
 
   it { should be_valid }
 
   describe "validation" do
+
+    describe "date attribute" do
+      describe "when date is not present" do
+        before { @tutorial.date_created = nil }
+
+        it { should_not be_valid }
+      end
+    end
 
     describe "title attribute" do
 
@@ -66,7 +76,7 @@ describe Tutorial do
       end
 
       describe "when url is in correct format" do
-        correct_urls = %w[hello.com hello.hey.com www.hello.com http://www.hello.com]
+        correct_urls = %w[hello.com google.com hello.hey.com www.hello.com http://www.hello.com]
 
         correct_urls.each do |url|
           before { @tutorial.url = url }

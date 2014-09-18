@@ -1,4 +1,5 @@
 class TutorialsController < ApplicationController
+  
 
   def new 
     @title = "Add a tutorial"
@@ -9,7 +10,7 @@ class TutorialsController < ApplicationController
     @tutorial = Tutorial.new(tutorial_params)
     if @tutorial.save
       flash[:success] = "New tutorial created"
-      redirect_to 'tutorials_path'
+      redirect_to tutorials_path
     else
       render 'new'
     end
@@ -17,6 +18,26 @@ class TutorialsController < ApplicationController
 
   def index
     @title = "All tutorials"
-    @users = User.paginate(page: params[:page])
+    @tutorials = Tutorial.paginate(page: params[:page])
   end
+
+  private
+
+    def tutorial_params
+      params.require(:tutorial)
+            .permit(
+              :title, 
+              :url, 
+              :description, 
+              :publisher_id, 
+              :category_id, 
+              :media_type_id, 
+              :is_paid,
+              :date_created
+            )
+    end
+
+    # before filters
+
+    
 end

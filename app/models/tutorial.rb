@@ -1,7 +1,6 @@
 require 'uri'
 
 class Tutorial < ActiveRecord::Base
-  
 
   validates :title, presence: true, 
                     length: { maximum: 200 }
@@ -12,4 +11,6 @@ class Tutorial < ActiveRecord::Base
   validates :description, length: { maximum: 500 }
   validates :media_type_id, presence: true
   validates :publisher_id, presence: true
+  validates :date_created, presence: true
+
 end
