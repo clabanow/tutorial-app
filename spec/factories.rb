@@ -1,12 +1,25 @@
 FactoryGirl.define do
   factory :tutorial do
-    name 'The Ruby on Rails Tutorial'
-    category 'Libraries and Platforms'
-    rating 4.5
-    votes 125
-    comments 65
+    title 'The Ruby on Rails Tutorial'
+    category_id 1
     url 'http://www.railstutorial.org'
     description 'A rails tutorial for beginners'
-    publisher 'Michael Hartl'
+    publisher_id 1
+    media_type_id 1
+    is_paid true
+    date_created Date.parse("11/11/2011")
+  end
+
+  factory :tag do
+    name 'rails'
+  end
+
+  factory :language do
+    name 'ruby'
+  end
+
+  factory :topic do
+    tutorial_id 1
+    tag_id 1
   end
 end

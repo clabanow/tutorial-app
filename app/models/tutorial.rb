@@ -4,6 +4,9 @@ class Tutorial < ActiveRecord::Base
   before_validation :format_url
   before_save       :format_url
 
+  has_many :topics
+  has_many :tags, :through => :topics
+
   validates :title, presence: true, 
                     length: { maximum: 200 }
   validates :category_id, presence: true

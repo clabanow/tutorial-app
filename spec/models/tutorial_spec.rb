@@ -23,6 +23,8 @@ describe Tutorial do
   it { should respond_to(:media_type_id) }
   it { should respond_to(:is_paid) }
   it { should respond_to(:date_created) }
+  it { should respond_to(:topics) }
+  it { should respond_to(:tags) }
 
   it { should be_valid }
 
