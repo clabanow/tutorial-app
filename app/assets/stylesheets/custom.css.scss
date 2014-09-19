@@ -1,0 +1,53 @@
+/* header */
+
+#header {
+  height: 50px;
+  background-color: blue;
+  color: white;
+}
+
+/* footer */
+
+#site-footer {
+  background-color: yellow;
+  text-align: center;
+}
+
+/* content */
+
+#main-content {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* forms */
+
+.tutorial-form {
+  width: 600px;
+  padding: 20px;
+  margin: 40px auto;
+  border: 1px solid gray;
+  border-radius: 20px;
+  h1 {
+    margin: 15px 0;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .form-field {
+    margin-bottom: 10px;
+    label {
+      display: inline-block;
+      vertical-align: top;
+      width: 140px;
+      margin-right: 10px;
+    }
+    input {
+      padding: 3px;
+      width: 150px;
+    }
+    textarea {
+      width: 300px;
+      height: 100px;
+    }
+  }
+}

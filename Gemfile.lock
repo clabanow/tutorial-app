@@ -31,6 +31,7 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    addressable (2.3.6)
     arel (4.0.2)
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
@@ -168,6 +169,9 @@ GEM
     uglifier (2.1.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    validate_url (0.2.2)
+      activemodel (>= 3.0.0)
+      addressable
     websocket (1.0.7)
     will_paginate (3.0.4)
     xpath (2.0.0)
@@ -196,4 +200,5 @@ DEPENDENCIES
   sprockets (= 2.11.0)
   turbolinks (= 1.1.1)
   uglifier (= 2.1.1)
+  validate_url
   will_paginate (= 3.0.4)

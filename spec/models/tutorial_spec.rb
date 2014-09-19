@@ -65,15 +65,15 @@ describe Tutorial do
         it { should_not be_valid }
       end
 
-      describe "when url is not in correct format" do
-        wrong_urls = %w[hello hello_com hello.co+m hello.commy hello.]
+      # describe "when url is not in correct format" do
+      #   wrong_urls = %w[hello hello_com hello.co+m hello.commy hello.]
 
-        wrong_urls.each do |url|
-          before { @tutorial.url = url }
+      #   wrong_urls.each do |url|
+      #     before { @tutorial.url = url }
           
-          it { should_not be_valid }
-        end
-      end
+      #     it { should_not be_valid }
+      #   end
+      # end
 
       describe "when url is in correct format" do
         correct_urls = %w[hello.com google.com hello.hey.com www.hello.com http://www.hello.com]
@@ -107,6 +107,36 @@ describe Tutorial do
       it { should_not be_valid }
     end
 
+    describe "when url has already been saved" do
+      let(:site_with_same_url) { @tutorial.dup }
+      subject { site_with_same_url }
+      before do
+        site_with_same_url.url = @tutorial.url.upcase
+        @tutorial.save
+      end
+
+      it { should_not be_valid }
+    end
+
+    describe "when url leads to site already in database" do
+      before { @tutorial.save }
+      let(:duplicate_site) { @tutorial.dup }
+
+      it "should not only differ in http prefix" do
+        duplicate_site.url = "www.railstutorial.org"
+        duplicate_site.save
+
+        expect(duplicate_site).to_not be_valid
+      end
+
+      it "should not only differ in www prefix" do
+        duplicate_site.url = "railstutorial.org"
+        duplicate_site.save
+
+        expect(duplicate_site).to_not be_valid
+      end
+        
+    end
     
   end
 

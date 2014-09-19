@@ -1,32 +1,51 @@
-<h1>Add a tutorial</h1>
+<div class='tutorial-form'>
 
-<%= form_for(@tutorial) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+  <h1 class='admin-header'>Add a tutorial</h1>
 
-  <%= f.label :url, "Link" %>
-  <%= f.text_field :url %>
+  <%= form_for(@tutorial) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :title, "Tutorial name" %>
-  <%= f.text_field :title %>
+    <div class='form-field'>
+      <%= f.label :url, "Link" %>
+      <%= f.text_field :url %>
+    </div>
 
-  <%= f.label :description, "A brief description" %>
-  <%= f.text_area :description %>
+    <div class="form-field">
+      <%= f.label :title, "Tutorial name" %>
+      <%= f.text_field :title %>
+    </div>
 
-  <%= f.label :publisher_id, "Author" %>
-  <%= f.number_field :publisher_id %>
+    <div class="form-field">
+      <%= f.label :description, "A brief description" %>
+      <%= f.text_area :description %>
+    </div>
 
-  <%= f.label :category_id, "Category" %>
-  <%= f.number_field :category_id %>
+    <div class="form-field">
+      <%= f.label :publisher_id, "Author" %>
+      <%= f.number_field :publisher_id %>
+    </div>
 
-  <%= f.label :media_type_id, "Media type" %>
-  <%= f.number_field :media_type_id %>
+    <div class="form-field">
+      <%= f.label :category_id, "Category" %>
+      <%= f.number_field :category_id %>
+    </div>
 
-  <%= f.label :is_paid, "Paid?" %>
-  <%= f.check_box :is_paid %>
+    <div class="form-field">
+      <%= f.label :media_type_id, "Media type" %>
+      <%= f.number_field :media_type_id %>
+    </div>
 
-  <%= f.label :date_created, "Date" %>
-  <%= f.date_select :date_created, order: [:month, :year], start_year: 2010 %>
+    <div class="form-field">
+      <%= f.label :is_paid, "Paid?" %>
+      <%= f.check_box :is_paid %>
+    </div>
 
-  <%= f.submit "Add tutorial", class: 'btn' %>
+    <div class="form-field">
+      <%= f.label :date_created, "Date" %>
+      <%= f.date_select :date_created, order: [:month, :year], start_year: 2010 %>
+    </div>
 
-<% end %>
+    <%= f.submit "Add tutorial", class: 'btn submit-btn' %>
+
+  <% end %>
+</div>

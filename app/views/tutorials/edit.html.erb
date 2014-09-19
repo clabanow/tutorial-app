@@ -1,0 +1,54 @@
+<div class="tutorial-form">
+  
+  <div class='form'>
+  
+    <h1 class='admin-header'>Edit tutorial</h1>
+    
+    <%= form_for(@tutorial) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+  
+      <div class='form-field'>
+        <%= f.label :url, "Link" %>
+        <%= f.text_field :url %>
+      </div>
+  
+      <div class="form-field">
+        <%= f.label :title, "Tutorial name" %>
+        <%= f.text_field :title %>
+      </div>
+  
+      <div class="form-field">
+        <%= f.label :description, "A brief description" %>
+        <%= f.text_area :description %>
+      </div>
+  
+      <div class="form-field">
+        <%= f.label :publisher_id, "Author" %>
+        <%= f.number_field :publisher_id %>
+      </div>
+  
+      <div class="form-field">
+        <%= f.label :category_id, "Category" %>
+        <%= f.number_field :category_id %>
+      </div>
+  
+      <div class="form-field">
+        <%= f.label :media_type_id, "Media type" %>
+        <%= f.number_field :media_type_id %>
+      </div>
+  
+      <div class="form-field">
+        <%= f.label :is_paid, "Paid?" %>
+        <%= f.check_box :is_paid %>
+      </div>
+  
+      <div class="form-field">
+        <%= f.label :date_created, "Date" %>
+        <%= f.date_select :date_created, order: [:month, :year], start_year: 2010 %>
+      </div>
+  
+      <%= f.submit "Save tutorial", class: 'btn submit-btn' %>
+  
+    <% end %>
+  </div>
+</div>

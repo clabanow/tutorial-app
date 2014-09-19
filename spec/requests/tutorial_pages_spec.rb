@@ -33,23 +33,37 @@ describe "Tutorial Pages" do
         before { click_button submit }
         let(:tutorial) { Tutorial.find_by(title: "A new tutorial") }
 
-        expect(tutorial).to be_valid
-        it { should have_title(get_full_title('All tutorials')) }
-        it { should have_selector('div.alert.alert-success', text: 'tutorial created') }
-
-        describe "editing the tutorial" do
-          before do
-            visit edit_tutorial_path
-            fill_in "Tutorial name", with: "An edited tutorial"
-            click_button submit
-            let(:edited_tutorial) { Tutorial.find_by(title: "An edited tutorial") }
-          end
-
-          expect(tutorial).not_to be_valid
-          expect(edited_tutorial).to be_valid
+        describe "user should be routed to list of all tutorials" do
           it { should have_title(get_full_title('All tutorials')) }
-          it { should have_selector('div.alert.alert-success', text: 'tutorial edited') }
+          it { should have_selector('div.alert.alert-success', text: 'tutorial created') }
         end
+
+        it "should now be able to delete a tutorial" do
+          expect { delete tutorial_path(tutorial) }.to change(Tutorial, :count).by(-1)
+          expect { page.to have_title(get_full_title('All tutorials')) }
+        end
+        
+        describe "saved tutorial should now be editable" do
+          before { visit edit_tutorial_path(tutorial.id) }
+          let(:title) { find_field('Tutorial name').value }
+
+          specify { expect(tutorial.title).to eq title }
+          it { should have_selector('h1', 'Edit tutorial') }
+
+          describe "editing the tutorial" do
+            before do
+              fill_in "Tutorial name", with: "An edited tutorial"
+              click_button 'Save tutorial'
+            end
+            let(:edited_tutorial) { Tutorial.find(tutorial.id) }
+
+            specify { expect(edited_tutorial.url).to eq tutorial.url }
+            it { should have_title(get_full_title('All tutorials')) }
+            it { should have_selector('div.alert.alert-success', text: 'Tutorial edited') }
+          end
+        end
+
+
       end
     end
   end
