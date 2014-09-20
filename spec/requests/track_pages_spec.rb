@@ -7,7 +7,6 @@ describe "Track Pages" do
   subject { page }
 
   describe "creating a new tutorial" do
-    let(:submit) { "Add track" }
     before { visit new_track_path }
 
     describe "submitting with invalid information" do
@@ -17,9 +16,7 @@ describe "Track Pages" do
     end
 
     describe "with valid information" do
-      before do
-        fill_in "Name", with: original_name
-      end
+      before { fill_in "Name", with: original_name }
 
       it "should create a new track" do
         expect { click_button submit }.to change(Track, :count).by(1)
