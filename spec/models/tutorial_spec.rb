@@ -25,8 +25,48 @@ describe Tutorial do
   it { should respond_to(:date_created) }
   it { should respond_to(:topics) }
   it { should respond_to(:tags) }
+  it { should respond_to(:language_tutorials) }
+  it { should respond_to(:languages) }
 
   it { should be_valid }
+
+  describe "adding a language" do
+    let(:language) { FactoryGirl.create(:language) }
+    before do
+      @tutorial.save
+      @tutorial.add_language!(language)
+    end
+
+    specify { expect(LanguageTutorial.find_by(tutorial_id: @tutorial.id)).not_to eq nil }
+    it { should have_language(language) }
+    its(:languages) { should include(language) }
+
+    describe "and removing a language" do
+      before { @tutorial.remove_language!(language) }
+
+      it { should_not have_language(language) }
+      its(:languages) { should_not include(language) }
+    end
+  end
+
+  describe "adding a topic" do
+    let(:tag) { FactoryGirl.create(:tag) }
+    before do
+      @tutorial.save
+      @tutorial.add_topic!(tag)
+    end
+
+    specify { expect(Topic.find_by(tutorial_id: @tutorial.id)).not_to eq nil }
+    it { should have_topic(tag) }
+    its(:tags) { should include(tag) }
+
+    describe "and removing a tag" do
+      before { @tutorial.remove_topic!(tag) }
+
+      it { should_not have_topic(tag) }
+      its(:tags) { should_not include(tag) }
+    end
+  end
 
   describe "validation" do
 

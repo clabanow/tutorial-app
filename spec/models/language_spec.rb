@@ -8,6 +8,8 @@ describe Language do
   subject { @language }
 
   it { should respond_to(:name) }
+  it { should respond_to(:language_tutorials) }
+  it { should respond_to(:tutorials) }
 
   it { should be_valid }
 
@@ -20,13 +22,12 @@ describe Language do
   end
 
   describe "when object is saved" do
-    describe "name should be capitalized" do
+    describe "name should be converted to downcase" do
       before do
-        @language.name = "ruby"
+        @language.name = "Ruby"
         @language.save
       end
 
-    its(:name) { should eq "Ruby" }
     end
   end 
 end

@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :tutorial do
     title 'The Ruby on Rails Tutorial'
     category_id 1
@@ -21,5 +22,16 @@ FactoryGirl.define do
   factory :topic do
     tutorial_id 1
     tag_id 1
+  end
+
+  factory :track do
+    name 'Learn angular'
+  end
+
+  factory :track_tutorial do
+    tutorial_id 1
+    track_id 3
+    position 4
+    description "an intro to js"
   end
 end

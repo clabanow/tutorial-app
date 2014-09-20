@@ -4,8 +4,14 @@ class Tutorial < ActiveRecord::Base
   before_validation :format_url
   before_save       :format_url
 
-  has_many :topics
+  has_many :topics, :dependent => :destroy
   has_many :tags, :through => :topics
+
+  has_many :language_tutorials, :dependent => :destroy
+  has_many :languages, :through => :language_tutorials
+
+  has_many :track_tutorials, :dependent => :destroy
+  has_many :tracks, :through => :track_tutorials
 
   validates :title, presence: true, 
                     length: { maximum: 200 }
@@ -18,10 +24,31 @@ class Tutorial < ActiveRecord::Base
   validates :publisher_id, presence: true
   validates :date_created, presence: true
 
-  private
+  def has_language?(language)
+    language_tutorials.find_by(language_id: language.id)
+  end
 
-    def check_dups
-    end
+  def add_language!(language) 
+    language_tutorials.create!(language_id: language.id)
+  end
+
+  def remove_language!(language)
+    language_tutorials.find_by(language_id: language.id).destroy
+  end
+
+  def has_topic?(tag)
+    topics.find_by(tag_id: tag.id)
+  end
+
+  def add_topic!(tag)
+    topics.create!(tag_id: tag.id)
+  end
+
+  def remove_topic!(tag)
+    topics.find_by(tag_id: tag.id).destroy
+  end
+
+  private
 
     def format_url
       return self.url if self.url.empty?

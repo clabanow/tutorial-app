@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919115508) do
+ActiveRecord::Schema.define(version: 20140919171632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "language_tutorials", force: true do |t|
+    t.integer  "tutorial_id"
+    t.integer  "language_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "language_tutorials", ["language_id"], name: "index_language_tutorials_on_language_id", using: :btree
+  add_index "language_tutorials", ["tutorial_id"], name: "index_language_tutorials_on_tutorial_id", using: :btree
 
   create_table "languages", force: true do |t|
     t.string   "name"
@@ -41,6 +51,23 @@ ActiveRecord::Schema.define(version: 20140919115508) do
 
   add_index "topics", ["tag_id"], name: "index_topics_on_tag_id", using: :btree
   add_index "topics", ["tutorial_id"], name: "index_topics_on_tutorial_id", using: :btree
+
+  create_table "track_tutorials", force: true do |t|
+    t.integer  "tutorial_id"
+    t.integer  "track_id"
+    t.string   "description"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tracks", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tracks", ["name"], name: "index_tracks_on_name", using: :btree
 
   create_table "tutorials", force: true do |t|
     t.integer  "category_id"
