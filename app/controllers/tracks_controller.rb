@@ -13,7 +13,7 @@ class TracksController < ApplicationController
   def create
     @track = Track.new(track_params)
     if @track.save
-      flash[:success] = "New track created"
+      flash[:success] = "New track added"
       redirect_to @track
     else
       render 'new'
@@ -22,6 +22,7 @@ class TracksController < ApplicationController
 
   def show
     @track = Track.find(params[:id])
+    @tutorials = @track.tutorials
     @title = @track.name
   end
 
@@ -31,6 +32,7 @@ class TracksController < ApplicationController
   end
 
   def update
+    @track = Track.find(params[:id])
     if @track.update_attributes(track_params)
       flash[:success] = "Track successfully edited"
       redirect_to @track
@@ -40,7 +42,7 @@ class TracksController < ApplicationController
   end
 
   def destroy
-    Track.find(params[:id])
+    Track.find(params[:id]).destroy
     flash[:success] = "Track successfully deleted"
     redirect_to tracks_url
   end

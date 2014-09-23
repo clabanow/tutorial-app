@@ -1,0 +1,14 @@
+<div class='admin-form'>
+  <h1 class='admin-tutorial'>Edit track</h1>
+
+  <%= form_for(@track) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <div class='form-field'>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+
+    <%= f.submit "Save track", class: 'btn submit-btn' %>
+  <% end %>
+</div>

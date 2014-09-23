@@ -26,8 +26,10 @@ describe "Track Pages" do
         before { click_button submit }
         let(:track) { Track.find_by(name: original_name) }
 
-        describe "user should now be routed to a list of all tracks" do
-          it { should have_title(get_full_title("All tracks")) }
+        specify { expect(Track.count).to eq 1}
+
+        describe "user should now be routed to the page of the created track" do
+          it { should have_selector('h1', text: original_name) }
           it { should have_selector('div.alert.alert-success', text: 'added') }
         end
 
@@ -52,7 +54,7 @@ describe "Track Pages" do
 
             specify { expect(edited_track.name).to eq edited_name }
             specify { expect(original_track).to eq nil }
-            it { should have_title(get_full_title("All tracks")) }
+            it { should have_selector('h1', text: edited_name) }
             it { should have_selector('div.alert.alert-success', text: 'edited') }
           end
         end
