@@ -31,7 +31,7 @@ describe "Track Pages" do
           it { should have_selector('div.alert.alert-success', text: 'added') }
         end
 
-        it "user should not be able to delete the track" do
+        it "user should now be able to delete the track" do
           expect { delete track_path(track) }.to change(Track, :count).by(-1)
           expect { page.to have_title(get_full_title("All tracks")) }
         end
