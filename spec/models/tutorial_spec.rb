@@ -8,7 +8,7 @@ describe Tutorial do
     url: 'http://www.railstutorial.org',
     description: 'A rails tutorial for beginners',
     publisher_id: 1,
-    media_type_id: 1,
+    media_type: 'text',
     is_paid: false,
     date_created: Date.parse('1-1-2014')
     ) }
@@ -20,7 +20,7 @@ describe Tutorial do
   it { should respond_to(:url) }
   it { should respond_to(:description) }
   it { should respond_to(:publisher_id) }
-  it { should respond_to(:media_type_id) }
+  it { should respond_to(:media_type) }
   it { should respond_to(:is_paid) }
   it { should respond_to(:date_created) }
   it { should respond_to(:topics) }
@@ -143,8 +143,8 @@ describe Tutorial do
       it { should_not be_valid }
     end
 
-    describe "media_type_id attribute is missing" do
-      before { @tutorial.media_type_id = nil }
+    describe "media_type attribute is missing" do
+      before { @tutorial.media_type = nil }
 
       it { should_not be_valid }
     end

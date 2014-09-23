@@ -6,7 +6,7 @@ FactoryGirl.define do
     url 'http://www.railstutorial.org'
     description 'A rails tutorial for beginners'
     publisher_id 1
-    media_type_id 1
+    media_type 1
     is_paid true
     date_created Date.parse("11/11/2011")
   end

@@ -1,5 +1,9 @@
 class TutorialsController < ApplicationController
   
+  def index
+    @title = "All tutorials"
+    @tutorials = Tutorial.paginate(page: params[:page])
+  end
 
   def new 
     @title = "Add a tutorial"
@@ -14,11 +18,6 @@ class TutorialsController < ApplicationController
     else
       render 'new'
     end
-  end
-
-  def index
-    @title = "All tutorials"
-    @tutorials = Tutorial.paginate(page: params[:page])
   end
 
   def edit
@@ -52,7 +51,7 @@ class TutorialsController < ApplicationController
               :description, 
               :publisher_id, 
               :category_id, 
-              :media_type_id, 
+              :media_type, 
               :is_paid,
               :date_created
             )

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "Language Pages" do
   let(:submit)        { "Add language" }
-  let(:original_name) { "Javascript" }
-  let(:edited_name)   { "Ruby" }
+  let(:original_name) { "javascript" }
+  let(:edited_name)   { "ruby" }
   subject { page }
 
   describe "creating a new language" do
@@ -19,12 +19,14 @@ describe "Language Pages" do
       before { fill_in "Name", with: original_name }
 
       it "should create a new language" do
-        expect { click_button submit }.to change(Track, :count).by(1)
+        expect { click_button submit }.to change(Language, :count).by(1)
       end
 
       describe "after saving the language" do
         before { click_button submit }
-        let(:saved_language) { Language.find_by(name: original_name) }
+        let(:language) { Language.find_by(name: original_name) }
+
+        specify { expect(Language.count).to eq 1 }
 
         describe "user should be routed to a list of all languages" do
           it { should have_title(get_full_title("All languages")) }
@@ -32,12 +34,12 @@ describe "Language Pages" do
         end
 
         it "user should be able to delete the language" do
-          expect { delete language_path(saved_language) }.to change(Language, :count).by(-1)
+          expect { delete language_path(language) }.to change(Language, :count).by(-1)
           expect { page.to have_title(get_full_title("All languages")) }
         end
 
         describe "saved language should be editable" do
-          before { visit edit_language_path(saved_language) }
+          before { visit edit_language_path(language) }
 
           specify { expect(find_field("Name").value).to eq original_name }
           it { should have_selector('h1', 'Edit language') }

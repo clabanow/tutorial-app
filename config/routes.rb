@@ -1,5 +1,5 @@
 TutorialSite::Application.routes.draw do
-  resources :tutorials, :tracks
+  resources :tutorials, :tracks, :languages, :tags
 
   root 'pages#home'
 

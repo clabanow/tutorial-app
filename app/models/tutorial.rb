@@ -20,7 +20,7 @@ class Tutorial < ActiveRecord::Base
                   format: { with: URI.regexp },
                   uniqueness: { case_sensitive: false }
   validates :description, length: { maximum: 500 }
-  validates :media_type_id, presence: true
+  validates :media_type, presence: true
   validates :publisher_id, presence: true
   validates :date_created, presence: true
 

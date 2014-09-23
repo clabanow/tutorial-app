@@ -1,0 +1,14 @@
+<div class='admin-form'>
+  <h1 class='admin-tutorial'>Add a tag</h1>
+
+  <%= form_for(@tag) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <div class='form-field'>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+
+    <%= f.submit "Add tag", class: 'btn submit-btn' %>
+  <% end %>
+</div>
