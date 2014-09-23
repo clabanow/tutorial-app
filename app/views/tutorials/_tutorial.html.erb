@@ -2,7 +2,10 @@
   <div>
     <%= link_to tutorial.title, tutorial.url %> |
     Link: <%= tutorial.url %> |
-    Author: <%= tutorial.publisher_id %> |
+    <% if tutorial.author %>
+      Author: <%= tutorial.author %>
+    <% end %>
+    Author: <%= tutorial.author %> |
     Created: <%= tutorial.date_created.strftime("%B %Y") %>
   </div>
   <div>

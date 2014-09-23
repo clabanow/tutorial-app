@@ -21,7 +21,7 @@ class Tutorial < ActiveRecord::Base
                   uniqueness: { case_sensitive: false }
   validates :description, length: { maximum: 500 }
   validates :media_type, presence: true
-  validates :publisher_id, presence: true
+  validates :author
   validates :date_created, presence: true
 
   def has_language?(language)

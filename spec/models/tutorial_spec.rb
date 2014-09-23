@@ -7,7 +7,7 @@ describe Tutorial do
     category_id: 1,
     url: 'http://www.railstutorial.org',
     description: 'A rails tutorial for beginners',
-    publisher_id: 1,
+    author: 'Larry Page',
     media_type: 'text',
     is_paid: false,
     date_created: Date.parse('1-1-2014')
@@ -19,7 +19,7 @@ describe Tutorial do
   it { should respond_to(:category_id) }
   it { should respond_to(:url) }
   it { should respond_to(:description) }
-  it { should respond_to(:publisher_id) }
+  it { should respond_to(:author) }
   it { should respond_to(:media_type) }
   it { should respond_to(:is_paid) }
   it { should respond_to(:date_created) }
@@ -135,12 +135,6 @@ describe Tutorial do
 
         it { should_not be_valid }
       end
-    end
-
-    describe "publisher_id attribute is missing" do
-      before { @tutorial.publisher_id = nil }
-
-      it { should_not be_valid }
     end
 
     describe "media_type attribute is missing" do

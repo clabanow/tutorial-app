@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923141934) do
+ActiveRecord::Schema.define(version: 20140923143146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,11 +70,10 @@ ActiveRecord::Schema.define(version: 20140923141934) do
   add_index "tracks", ["name"], name: "index_tracks_on_name", using: :btree
 
   create_table "tutorials", force: true do |t|
-    t.integer  "category_id"
     t.string   "url"
     t.string   "title"
     t.string   "description"
-    t.integer  "publisher_id"
+    t.string   "author"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "media_type"
@@ -82,8 +81,7 @@ ActiveRecord::Schema.define(version: 20140923141934) do
     t.date     "date_created"
   end
 
-  add_index "tutorials", ["category_id"], name: "index_tutorials_on_category_id", using: :btree
-  add_index "tutorials", ["publisher_id"], name: "index_tutorials_on_publisher_id", using: :btree
+  add_index "tutorials", ["author"], name: "index_tutorials_on_author", using: :btree
   add_index "tutorials", ["url"], name: "index_tutorials_on_url", unique: true, using: :btree
 
 end

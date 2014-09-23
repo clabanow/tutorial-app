@@ -19,8 +19,8 @@ describe "Tutorial Pages" do
         fill_in "Category",            with: 1
         fill_in "Link",                with: "http://www.google.com"
         fill_in "A brief description", with: "A JS tutorial"
-        fill_in "Author",              with: 2
-        fill_in "Media type",          with: 1
+        fill_in "Author",              with: 'Guido van Rossum'
+        fill_in "Media type",          with: 'text'
         check "Paid?"  
         # date is left as default             
       end

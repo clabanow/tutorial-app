@@ -5,7 +5,7 @@ FactoryGirl.define do
     category_id 1
     url 'http://www.railstutorial.org'
     description 'A rails tutorial for beginners'
-    publisher_id 1
+    author 'Sergei Brin'
     media_type 1
     is_paid true
     date_created Date.parse("11/11/2011")
