@@ -1,0 +1,27 @@
+<h1>Listing primary_topics</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @primary_topics.each do |primary_topic| %>
+      <tr>
+        <td><%= primary_topic.name %></td>
+        <td><%= link_to 'Show', primary_topic %></td>
+        <td><%= link_to 'Edit', edit_primary_topic_path(primary_topic) %></td>
+        <td><%= link_to 'Destroy', primary_topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Primary topic', new_primary_topic_path %>

@@ -1,0 +1,2 @@
+module PrimaryTopicsHelper
+end

@@ -1,0 +1,3 @@
+class PrimaryTopicsController < ApplicationController
+  
+end

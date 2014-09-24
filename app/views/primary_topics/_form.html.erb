@@ -1,0 +1,21 @@
+<%= form_for(@primary_topic) do |f| %>
+  <% if @primary_topic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@primary_topic.errors.count, "error") %> prohibited this primary_topic from being saved:</h2>
+
+      <ul>
+      <% @primary_topic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
