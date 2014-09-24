@@ -16,9 +16,9 @@ describe "Tutorial Pages" do
     describe "with valid information" do
       before do
         fill_in "Tutorial name",       with: "A new tutorial"
-        fill_in "Category",            with: 1
         fill_in "Link",                with: "http://www.google.com"
         fill_in "A brief description", with: "A JS tutorial"
+        fill_in "Primary topic",       with: 5
         fill_in "Author",              with: 'Guido van Rossum'
         fill_in "Media type",          with: 'text'
         check "Paid?"  

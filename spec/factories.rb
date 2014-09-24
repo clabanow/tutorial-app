@@ -2,13 +2,16 @@ FactoryGirl.define do
 
   factory :tutorial do
     title 'The Ruby on Rails Tutorial'
-    category_id 1
     url 'http://www.railstutorial.org'
     description 'A rails tutorial for beginners'
     author 'Sergei Brin'
     media_type 1
     is_paid true
     date_created Date.parse("11/11/2011")
+  end
+
+  factory :primary_topic do
+    name 'javascript'
   end
 
   factory :tag do
@@ -22,6 +25,7 @@ FactoryGirl.define do
   factory :topic do
     tutorial_id 1
     tag_id 1
+    is_primary_topic false
   end
 
   factory :track do

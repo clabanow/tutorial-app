@@ -8,6 +8,8 @@ class TutorialsController < ApplicationController
   def new 
     @title = "Add a tutorial"
     @tutorial = Tutorial.new
+    @media_type_options = media_type_options
+    @tags = get_tags
   end
 
   def create
@@ -23,6 +25,8 @@ class TutorialsController < ApplicationController
   def edit
     @title = 'Edit tutorial'
     @tutorial = Tutorial.find(params[:id])
+    @media_type_options = media_type_options
+    @tags = get_tags
   end
 
   def update
@@ -49,13 +53,23 @@ class TutorialsController < ApplicationController
               :title, 
               :url, 
               :description, 
-              :publisher_id, 
-              :category_id, 
+              :author,
               :media_type, 
               :is_paid,
-              :date_created
+              :date_created,
+              :primary_topic_id
             )
     end
+
+    def media_type_options
+      %w[Text Video]
+    end
+
+    def get_tags
+      Tag.all.map(&:name_and_value)
+    end
+
+    
 
     # before filters
 

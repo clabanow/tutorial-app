@@ -4,7 +4,6 @@ describe Tutorial do
   
   before { @tutorial = Tutorial.new(
     title: 'The Ruby on Rails Tutorial',
-    category_id: 1,
     url: 'http://www.railstutorial.org',
     description: 'A rails tutorial for beginners',
     author: 'Larry Page',
@@ -16,12 +15,12 @@ describe Tutorial do
   subject { @tutorial }
 
   it { should respond_to(:title) }
-  it { should respond_to(:category_id) }
   it { should respond_to(:url) }
   it { should respond_to(:description) }
   it { should respond_to(:author) }
   it { should respond_to(:media_type) }
   it { should respond_to(:is_paid) }
+  it { should respond_to(:primary_topic)}
   it { should respond_to(:date_created) }
   it { should respond_to(:topics) }
   it { should respond_to(:tags) }
@@ -49,7 +48,17 @@ describe Tutorial do
     end
   end
 
-  describe "adding a topic" do
+  describe "adding a primary topic" do
+    let(:primary_topic) { Tag.create(name: 'HTML5') }
+    before do
+      @tutorial.primary_topic_id = primary_topic.id
+      @tutorial.save
+    end
+
+    its(:primary_topic) { should eq primary_topic }
+  end
+
+  describe "adding a tag" do
     let(:tag) { FactoryGirl.create(:tag) }
     before do
       @tutorial.save
@@ -91,12 +100,6 @@ describe Tutorial do
         
         it { should_not be_valid }
       end
-    end
-
-    describe "when category_id attribute is not present" do
-      before { @tutorial.category_id = nil }
-
-      it { should_not be_valid }
     end
 
     describe "url attribute" do
@@ -143,33 +146,26 @@ describe Tutorial do
       it { should_not be_valid }
     end
 
-    describe "when url has already been saved" do
-      let(:site_with_same_url) { @tutorial.dup }
-      subject { site_with_same_url }
-      before do
-        site_with_same_url.url = @tutorial.url.upcase
-        @tutorial.save
-      end
-
-      it { should_not be_valid }
-    end
-
     describe "when url leads to site already in database" do
       before { @tutorial.save }
       let(:duplicate_site) { @tutorial.dup }
 
+      it "should not only differ in case" do
+        duplicate_site.url = duplicate_site.url.upcase
+
+        expect(duplicate_site).not_to be_valid
+      end
+
       it "should not only differ in http prefix" do
         duplicate_site.url = "www.railstutorial.org"
-        duplicate_site.save
 
-        expect(duplicate_site).to_not be_valid
+        expect(duplicate_site).not_to be_valid
       end
 
       it "should not only differ in www prefix" do
         duplicate_site.url = "railstutorial.org"
-        duplicate_site.save
 
-        expect(duplicate_site).to_not be_valid
+        expect(duplicate_site).not_to be_valid
       end
         
     end

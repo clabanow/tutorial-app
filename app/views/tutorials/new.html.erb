@@ -16,6 +16,11 @@
     </div>
 
     <div class="form-field">
+      <%= f.label :primary_topic_id, "Primary topic" %>
+      <%= f.select :primary_topic_id, @tags %>
+    </div>
+
+    <div class="form-field">
       <%= f.label :description, "A brief description" %>
       <%= f.text_area :description %>
     </div>
@@ -26,13 +31,8 @@
     </div>
 
     <div class="form-field">
-      <%= f.label :category_id, "Category" %>
-      <%= f.number_field :category_id %>
-    </div>
-
-    <div class="form-field">
       <%= f.label :media_type, "Media type" %>
-      <%= f.text_field :media_type %>
+      <%= f.select :media_type, @media_type_options %>
     </div>
 
     <div class="form-field">

@@ -8,12 +8,12 @@ class CreateTutorials < ActiveRecord::Migration
       t.string  :url
       t.string  :title
       t.string  :description
-      t.integer  :publisher_id
+      t.integer  :author
 
       t.timestamps
     end
     add_index :tutorials, :category_id
     add_index :tutorials, :rating
-    add_index :tutorials, :publisher_id
+    add_index :tutorials, :author
   end
 end

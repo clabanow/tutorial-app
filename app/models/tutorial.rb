@@ -1,8 +1,12 @@
 require 'uri'
 
 class Tutorial < ActiveRecord::Base
+  attr_accessor :primary_topic_id
+
   before_validation :format_url
   before_save       :format_url
+
+  after_create :set_primary_topic
 
   has_many :topics, :dependent => :destroy
   has_many :tags, :through => :topics
@@ -15,14 +19,24 @@ class Tutorial < ActiveRecord::Base
 
   validates :title, presence: true, 
                     length: { maximum: 200 }
-  validates :category_id, presence: true
   validates :url, presence: true,
                   format: { with: URI.regexp },
                   uniqueness: { case_sensitive: false }
   validates :description, length: { maximum: 500 }
   validates :media_type, presence: true
-  validates :author
   validates :date_created, presence: true
+
+  def primary_topic_id
+    topics.find_by(is_primary_topic: true)
+  end
+
+  def primary_topic_id=(value)
+    self.primary_topic_id = value
+  end
+
+  def primary_topic
+    Topic.find(primary_topic_id)
+  end
 
   def has_language?(language)
     language_tutorials.find_by(language_id: language.id)
@@ -49,6 +63,10 @@ class Tutorial < ActiveRecord::Base
   end
 
   private
+
+    def set_primary_topic
+      Topic.create!(tutorial_id: self.id, tag_id: self.primary_topic_id, is_primary_topic: true)
+    end
 
     def format_url
       return self.url if self.url.empty?
