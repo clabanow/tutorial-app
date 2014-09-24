@@ -7,11 +7,12 @@ describe Tutorial do
     url: 'http://www.railstutorial.org',
     description: 'A rails tutorial for beginners',
     author: 'Larry Page',
+    primary_topic_id: 3,
     media_type: 'text',
     is_paid: false,
     date_created: Date.parse('1-1-2014')
     ) }
-
+new
   subject { @tutorial }
 
   it { should respond_to(:title) }
@@ -110,15 +111,15 @@ describe Tutorial do
         it { should_not be_valid }
       end
 
-      # describe "when url is not in correct format" do
-      #   wrong_urls = %w[hello hello_com hello.co+m hello.commy hello.]
+      describe "when url is not in correct format" do
+        wrong_urls = %w[hello hello_com hello.co+m hello.commy hello.]
 
-      #   wrong_urls.each do |url|
-      #     before { @tutorial.url = url }
+        wrong_urls.each do |url|
+          before { @tutorial.url = url }
           
-      #     it { should_not be_valid }
-      #   end
-      # end
+          it { should_not be_valid }
+        end
+      end
 
       describe "when url is in correct format" do
         correct_urls = %w[hello.com google.com hello.hey.com www.hello.com http://www.hello.com]
@@ -146,8 +147,17 @@ describe Tutorial do
       it { should_not be_valid }
     end
 
+    describe "when primary_topic_id is missing" do
+      before { @tutorial.primary_topic_id = nil }
+
+      it { should_not be_valid }
+    end
+
     describe "when url leads to site already in database" do
-      before { @tutorial.save }
+      before do
+        @tutorial.primary_topic_id = 2
+        @tutorial.save!
+      end
       let(:duplicate_site) { @tutorial.dup }
 
       it "should not only differ in case" do

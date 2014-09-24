@@ -3,8 +3,7 @@ require 'uri'
 class Tutorial < ActiveRecord::Base
   attr_accessor :primary_topic_id
 
-  before_validation :format_url
-  before_save       :format_url
+  before_save       :convert_url_for_saving
 
   after_create :set_primary_topic
 
@@ -19,23 +18,15 @@ class Tutorial < ActiveRecord::Base
 
   validates :title, presence: true, 
                     length: { maximum: 200 }
-  validates :url, presence: true,
-                  format: { with: URI.regexp },
-                  uniqueness: { case_sensitive: false }
   validates :description, length: { maximum: 500 }
   validates :media_type, presence: true
   validates :date_created, presence: true
+  validates :primary_topic_id, presence: true
 
-  def primary_topic_id
-    topics.find_by(is_primary_topic: true)
-  end
-
-  def primary_topic_id=(value)
-    self.primary_topic_id = value
-  end
+  validate  :url_is_present_and_valid_and_unique
 
   def primary_topic
-    Topic.find(primary_topic_id)
+    Tag.find(topics.find_by(is_primary_topic: true).tag_id)
   end
 
   def has_language?(language)
@@ -68,12 +59,27 @@ class Tutorial < ActiveRecord::Base
       Topic.create!(tutorial_id: self.id, tag_id: self.primary_topic_id, is_primary_topic: true)
     end
 
-    def format_url
+    def url_is_present_and_valid_and_unique
+      self.url = format_url("http://")
+
+      if self.url.empty?
+        errors.add(:url, "cannot be empty")
+      elsif !PublicSuffix.valid?(format_url("www."))
+        errors.add(:url, "is not a valid URL")
+      elsif Tutorial.where(:url => self.url).exists?
+        errors.add(:url, "already exists")
+      end
+    end
+
+    def convert_url_for_saving
+      self.url = format_url('http://')
+    end
+
+    def format_url(prefix)
       return self.url if self.url.empty?
 
-      prefix = "http://"
       trimmed_url = ''
-      url = self.url.downcase
+      url = self.url.strip.downcase
 
       starts_with_www      = url[0..3]  == "www."
       starts_with_httpwww  = url[0..10] == "http://www."
@@ -95,7 +101,7 @@ class Tutorial < ActiveRecord::Base
         trimmed_url = url
       end
 
-      self.url = "#{prefix}#{trimmed_url}"
+      "#{prefix}#{trimmed_url}"
     end
 
 end

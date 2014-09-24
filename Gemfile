@@ -9,7 +9,7 @@ gem 'pg', '0.17.1'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
-gem "validate_url"
+gem 'public_suffix'
 
 group :development do
   gem 'rspec-rails', '2.13.1'
