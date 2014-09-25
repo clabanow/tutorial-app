@@ -1,13 +1,14 @@
 require 'uri'
 
 class Tutorial < ActiveRecord::Base
-  attr_accessor :primary_topic_id
+  attr_accessor :primary_topic_id, :tag_ids
 
   before_save       :convert_url_for_saving
 
-  before_update :check_for_new_primary_id
+  before_update :check_for_new_primary_id, :check_for_existing_tag
 
-  after_create :set_primary_topic
+  after_create :set_primary_topic, :set_topics
+  after_update :set_primary_topic, :reset_topics
 
   has_many :topics, :dependent => :destroy
   has_many :tags, :through => :topics
@@ -21,14 +22,24 @@ class Tutorial < ActiveRecord::Base
   validates :title, presence: true, 
                     length: { maximum: 200 }
   validates :description, length: { maximum: 500 }
+  validates :author, presence: true
   validates :media_type, presence: true
   validates :date_created, presence: true
   validates :primary_topic_id, presence: true, :on => :create
 
-  validate  :url_is_present_and_valid_and_unique
+  validate  :url_is_present_and_valid_and_unique, :on => :create
+  validate  :url, presence: true, :on => :update
 
   def primary_topic
     Tag.find(topics.find_by(is_primary_topic: true).tag_id)
+  end
+
+  def primary_topic_name
+    primary_topic.name
+  end
+
+  def tag_names
+    tags.map(&:name)
   end
 
   def has_language?(language)
@@ -58,13 +69,39 @@ class Tutorial < ActiveRecord::Base
   private
 
     def check_for_new_primary_id
-      if self.primary_topic_id != primary_topic.id
-        primary_topic.destroy
+      if topics.where(:is_primary_topic => true).exists?
+        topics.where(:is_primary_topic => true).first.destroy
+      end
+    end
+
+    def check_for_existing_tag
+      if topics.where(:tag_id => self.primary_topic_id.to_i).exists?
+        topics.where(:tag_id => self.primary_topic_id.to_i).first.destroy
       end
     end
 
     def set_primary_topic
       Topic.create!(tutorial_id: self.id, tag_id: self.primary_topic_id, is_primary_topic: true)
+    end
+
+    def set_topics
+      if tag_ids
+        tag_array = tag_ids.split(',').map(&:to_i)
+      
+        tag_array.delete(primary_topic.id)
+
+        tag_array.each do |tag_id|
+          Topic.create!(tutorial_id: self.id, tag_id: tag_id, is_primary_topic: false)
+        end
+      end
+    end
+
+    def reset_topics
+      topics.where(:is_primary_topic => false).each do |topic|
+        topic.destroy
+      end
+
+      set_topics
     end
 
     def url_is_present_and_valid_and_unique

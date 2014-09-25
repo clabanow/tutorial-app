@@ -9,7 +9,7 @@ class TutorialsController < ApplicationController
     @title = "Add a tutorial"
     @tutorial = Tutorial.new
     @media_type_options = media_type_options
-    @tags = get_tags
+    @tags = get_tag_options
   end
 
   def create
@@ -19,7 +19,7 @@ class TutorialsController < ApplicationController
       redirect_to tutorials_path
     else
       @media_type_options = media_type_options
-      @tags = get_tags
+      @tags = get_tag_options
       render :new
     end
   end
@@ -28,19 +28,21 @@ class TutorialsController < ApplicationController
     @title = 'Edit tutorial'
     @tutorial = Tutorial.find(params[:id])
     @media_type_options = media_type_options
-    @tags = get_tags
-    @selected_primary_topic_id = @tutorial.primary_topic.id
+    @tags = get_tag_options
+    @selected_tags = get_selected_tags
+    @selected_primary_topic = @tutorial.primary_topic
   end
 
   def update
     @tutorial = Tutorial.find(params[:id])
-    if @tutorial.update_attributes(tutorial_params)
+    if @tutorial.update_attributes!(tutorial_params)
       flash[:success] = "Tutorial edited"
       redirect_to tutorials_path
     else
       @media_type_options = media_type_options
-      @tags = get_tags
-      @selected_primary_topic_id = @tutorial.primary_topic.id
+      @tags = get_tag_options
+      @selected_tags = get_selected_tags
+      @selected_primary_topic = @tutorial.primary_topic
       render :edit
     end
   end
@@ -63,7 +65,8 @@ class TutorialsController < ApplicationController
               :media_type, 
               :is_paid,
               :date_created,
-              :primary_topic_id
+              :primary_topic_id,
+              :tag_ids
             )
     end
 
@@ -71,11 +74,15 @@ class TutorialsController < ApplicationController
       %w[Text Video]
     end
 
-    def get_tags
-      Tag.all.map(&:name_and_value)
+    def get_tag_options
+      tags = Tag.all.map(&:name_and_value)
+      tags.unshift(['- select one -', nil])
+      tags
     end
 
-
+    def get_selected_tags
+      Tutorial.find(params[:id]).tags
+    end
 
     # before filters
 

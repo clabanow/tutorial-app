@@ -13,7 +13,6 @@ gem 'public_suffix'
 
 group :development do
   gem 'rspec-rails', '2.13.1'
-  gem 'public_suffix'
 end
 
 group :test do

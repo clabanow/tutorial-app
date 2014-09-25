@@ -1,8 +1,6 @@
 <div class="tutorial-form">
-  
-  <div class='form'>
-  
-    <h1 class='admin-header'>Edit tutorial</h1>
+
+  <h1 class='admin-header'>Edit tutorial</h1>
     
     <%= form_for(@tutorial) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
@@ -19,8 +17,38 @@
 
       <div class="form-field">
         <%= f.label :primary_topic_id, "Primary topic" %>
-        <%= f.select :primary_topic_id, @tags, :selected => @selected_primary_topic_id %>
+        <%= f.select :primary_topic_id, @tags, :selected => @selected_primary_topic.id %>
       </div>
+
+      <div class="form-field">
+        <label>Tags</label>
+        <select id='tag-options'>
+          <%= (options_for_select(@tags)) %> 
+        </select>
+        <span id='add-tag'>Add tag</span>
+      </div>
+
+      <div class='form-field'>
+        <label>Selected tags</label>
+        <div id='selected-tags'>
+
+          <div id='<%= @selected_primary_topic_id %>' class='selected-tag primary'>
+            <%= @selected_primary_topic.name %>
+          </div>
+
+          <% @selected_tags.each do |tag| %>
+
+            <% if tag.id != @selected_primary_topic.id %>
+              <div id='<%= tag.id %>' class='selected-tag'>
+              <%= tag.name %>
+              </div>
+            <% end %>
+
+          <% end %>
+        </div>
+      </div>
+
+      <input id='tutorial_tag_ids' type='hidden' name="tutorial[tag_ids]">
   
       <div class="form-field">
         <%= f.label :description, "A brief description" %>

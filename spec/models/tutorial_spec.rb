@@ -12,7 +12,7 @@ describe Tutorial do
     is_paid: false,
     date_created: Date.parse('1-1-2014')
     ) }
-new
+
   subject { @tutorial }
 
   it { should respond_to(:title) }
@@ -22,6 +22,7 @@ new
   it { should respond_to(:media_type) }
   it { should respond_to(:is_paid) }
   it { should respond_to(:primary_topic)}
+  it { should respond_to(:primary_topic_name)}
   it { should respond_to(:date_created) }
   it { should respond_to(:topics) }
   it { should respond_to(:tags) }
@@ -66,6 +67,7 @@ new
       @tutorial.add_topic!(tag)
     end
 
+    specify { expect(@tutorial.topics.where(is_primary_topic: true)).not_to eq nil }
     specify { expect(Topic.find_by(tutorial_id: @tutorial.id)).not_to eq nil }
     it { should have_topic(tag) }
     its(:tags) { should include(tag) }
@@ -101,6 +103,12 @@ new
         
         it { should_not be_valid }
       end
+    end
+
+    describe "when author is missing" do
+      before { @tutorial.author = '' }
+
+      it { should_not be_valid }
     end
 
     describe "url attribute" do

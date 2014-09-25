@@ -8,6 +8,10 @@ class Topic < ActiveRecord::Base
   validates :tutorial_id, :uniqueness => { :scope => :tag_id }
   validate  :tutorial_id_when_primary
 
+  def tag_name
+    Tag.find(tag_id).name
+  end
+
   private
 
     def tutorial_id_when_primary

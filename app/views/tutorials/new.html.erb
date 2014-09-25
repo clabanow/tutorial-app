@@ -17,8 +17,23 @@
 
     <div class="form-field">
       <%= f.label :primary_topic_id, "Primary topic" %>
-      <%= f.select :primary_topic_id, @tags %>
+      <%= f.select :primary_topic_id, @tags, selected: '- select one -'%>
     </div>
+
+    <div class="form-field">
+      <label>Tags</label>
+      <select id='tag-options'>
+        <%= (options_for_select(@tags)) %> 
+      </select>
+      <span id='add-tag'>Add tag</span>
+    </div>
+
+    <div class='form-field'>
+      <label>Selected tags</label>
+      <div id='selected-tags'></div>
+    </div>
+
+    <input id='tutorial_tag_ids' type='hidden' name="tutorial[tag_ids]">
 
     <div class="form-field">
       <%= f.label :description, "A brief description" %>

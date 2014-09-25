@@ -1,19 +1,15 @@
 <div class='tutorial'>
-  <div>
-    <%= link_to tutorial.title, tutorial.url %> |
-    Link: <%= tutorial.url %> |
-    <% if tutorial.author %>
-      Author: <%= tutorial.author %>
-    <% end %>
-    Author: <%= tutorial.author %> |
-    Created: <%= tutorial.date_created.strftime("%B %Y") %>
-  </div>
-  <div>
-    <% if tutorial.is_paid %>
-      Paid
-    <% else %>
-      Free
-    <% end %>
-  </div>
+  <div><%= tutorial.title %></div>
+  <ul>
+    <li>URL: <%= tutorial.url %></li>
+    <li>Author: <%= tutorial.author %></li>
+    <li>Description: <%= tutorial.description %></li>
+    <li>Primary topic: <%= tutorial.primary_topic_name %></li>
+    <li>Media type: <%= tutorial.media_type %></li>
+    <li>Date created: <%= tutorial.date_created %></li>
+    <li>Tags: <% tutorial.tag_names.each do |name| %>
+                <%= name %> 
+              <% end %>
+    </li>
+  </ul>
 </div>
-<br>
