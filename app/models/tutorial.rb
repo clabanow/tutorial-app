@@ -5,6 +5,8 @@ class Tutorial < ActiveRecord::Base
 
   before_save       :convert_url_for_saving
 
+  before_update :check_for_new_primary_id
+
   after_create :set_primary_topic
 
   has_many :topics, :dependent => :destroy
@@ -21,7 +23,7 @@ class Tutorial < ActiveRecord::Base
   validates :description, length: { maximum: 500 }
   validates :media_type, presence: true
   validates :date_created, presence: true
-  validates :primary_topic_id, presence: true
+  validates :primary_topic_id, presence: true, :on => :create
 
   validate  :url_is_present_and_valid_and_unique
 
@@ -54,6 +56,12 @@ class Tutorial < ActiveRecord::Base
   end
 
   private
+
+    def check_for_new_primary_id
+      if self.primary_topic_id != primary_topic.id
+        primary_topic.destroy
+      end
+    end
 
     def set_primary_topic
       Topic.create!(tutorial_id: self.id, tag_id: self.primary_topic_id, is_primary_topic: true)

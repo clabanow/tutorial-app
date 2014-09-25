@@ -6,7 +6,7 @@ describe Topic do
 
   before { @topic = Topic.create(tag_id: tag.id, 
                                  tutorial_id: tutorial.id,
-                                 is_primary_topic: true) }
+                                 is_primary_topic: false) }
   
   subject { @topic }
 
@@ -17,7 +17,7 @@ describe Topic do
     it { should respond_to(:tag) }
     its(:tag) { should eq tag }
     its(:tutorial) { should eq tutorial }
-    specify { expect(Topic.count).to eq 1 }
+    specify { expect(Topic.count).to eq 2 }
     specify { expect(Topic.find_by(tag_id: tag.id)).not_to eq nil }
     specify { expect(Topic.find_by(tutorial_id: tutorial.id)).not_to eq nil }
   end

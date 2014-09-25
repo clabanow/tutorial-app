@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe "Tutorial Pages" do
+  before do
+    Tag.create!(name: 'ruby')
+    Tag.create!(name: 'python')
+    Tag.create!(name: 'go')
+  end
   subject { page }
 
   describe "creating a new tutorial" do
@@ -18,9 +23,9 @@ describe "Tutorial Pages" do
         fill_in "Tutorial name",       with: "A new tutorial"
         fill_in "Link",                with: "http://www.google.com"
         fill_in "A brief description", with: "A JS tutorial"
-        fill_in "Primary topic",       with: 5
         fill_in "Author",              with: 'Guido van Rossum'
-        fill_in "Media type",          with: 'text'
+        select('Text', :from => 'Media type')
+        select('python', :from => 'Primary topic')
         check "Paid?"  
         # date is left as default             
       end
@@ -58,7 +63,7 @@ describe "Tutorial Pages" do
             let(:edited_tutorial) { Tutorial.find(tutorial.id) }
 
             specify { expect(edited_tutorial.url).to eq tutorial.url }
-            it { should have_title(get_full_title('All tutorials')) }
+            it { should have_title(get_full_title('Edit tutorial')) }
             it { should have_selector('div.alert.alert-success', text: 'Tutorial edited') }
           end
         end

@@ -19,7 +19,7 @@
 
       <div class="form-field">
         <%= f.label :primary_topic_id, "Primary topic" %>
-        <%= f.select :primary_topic_id, @tags %>
+        <%= f.select :primary_topic_id, @tags, :selected => @selected_primary_topic_id %>
       </div>
   
       <div class="form-field">

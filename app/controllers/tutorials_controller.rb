@@ -18,7 +18,9 @@ class TutorialsController < ApplicationController
       flash[:success] = "New tutorial created"
       redirect_to tutorials_path
     else
-      render 'new'
+      @media_type_options = media_type_options
+      @tags = get_tags
+      render :new
     end
   end
 
@@ -27,6 +29,7 @@ class TutorialsController < ApplicationController
     @tutorial = Tutorial.find(params[:id])
     @media_type_options = media_type_options
     @tags = get_tags
+    @selected_primary_topic_id = @tutorial.primary_topic.id
   end
 
   def update
@@ -35,7 +38,10 @@ class TutorialsController < ApplicationController
       flash[:success] = "Tutorial edited"
       redirect_to tutorials_path
     else
-      render 'edit'
+      @media_type_options = media_type_options
+      @tags = get_tags
+      @selected_primary_topic_id = @tutorial.primary_topic.id
+      render :edit
     end
   end
 
@@ -69,7 +75,7 @@ class TutorialsController < ApplicationController
       Tag.all.map(&:name_and_value)
     end
 
-    
+
 
     # before filters
 
